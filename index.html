@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Valentina</title>
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #ffedf4;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    /* Fondo animado */
+    .hearts {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0; left: 0;
+        overflow: hidden;
+        z-index: -1;
+    }
+
+    .heart {
+        position: absolute;
+        color: #ff79a6;
+        font-size: 24px;
+        animation: float 6s linear infinite;
+        opacity: 0.7;
+    }
+
+    @keyframes float {
+        from { transform: translateY(100vh) scale(0.8); }
+        to { transform: translateY(-10vh) scale(1.2); }
+    }
+
+    #game {
+        background: white;
+        padding: 30px;
+        width: 85%;
+        max-width: 450px;
+        border-radius: 20px;
+        box-shadow: 0px 0px 20px rgba(255, 120, 150, 0.25);
+        animation: fade 0.7s ease;
+        margin: 50px auto;
+        position: relative;
+    }
+
+    h1 {
+        color: #ff5b8f;
+    }
+
+    button {
+        background: #ff7aa6;
+        border: none;
+        padding: 12px 20px;
+        margin: 10px;
+        font-size: 16px;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    button:hover {
+        background: #ff4d88;
+    }
+
+    @keyframes fade {
+        from {opacity: 0; transform: scale(0.96);}
+        to {opacity: 1; transform: scale(1);}
+    }
+
+    /* Pantalla final */
+    #finalScreen {
+        display: none;
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255, 200, 220, 0.95);
+        text-align: center;
+        padding-top: 120px;
+        animation: fade 1s ease;
+        z-index: 1000;
+    }
+
+    #finalScreen h1 {
+        font-size: 40px;
+        color: #ff2f79;
+        animation: pop 1s ease forwards;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0.7); }
+        to { transform: scale(1); }
+    }
+
+    .big-heart {
+        font-size: 60px;
+        animation: heartbeat 1.5s infinite;
+        color: #ff0059;
+    }
+
+    @keyframes heartbeat {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.25); }
+        100% { transform: scale(1); }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Fondo animado -->
+<div class="hearts" id="heartsContainer"></div>
+
+<!-- Música suave -->
+<audio id="bgm" autoplay loop>
+    <source src="https://files.catbox.moe/6e8d7a.mp3" type="audio/mpeg">
+</audio>
+
+<div id="game">
+
+    <!-- NIVEL 1 -->
+    <div id="level1">
+        <h1>Nivel 1</h1>
+        <p>
+            Cuando te conocí por primera vez, Valentina, la verdad no pensé que fuera algo especial.  
+            Estábamos jugando Mobile Legends, y lo único que me llamó la atención ese día fue que siempre usabas el mismo héroe.  
+            Incluso se me escapó un comentario…  
+            <br><br><em>“¿Acaso no sabes jugar más héroes?”</em>  
+            <br><br>
+            Si tan solo hubiera sabido lo importante que te volverías para mí.
+        </p>
+        <button onclick="nextLevel(1)">Continuar</button>
+    </div>
+
+    <!-- NIVEL 2 -->
+    <div id="level2" style="display:none;">
+        <h1>Nivel 2</h1>
+        <p>
+            Nunca me di cuenta del momento exacto en el que empezaste a gustarme.  
+            Solo… pasó.  
+            Un día me descubrí pensando en ti más de lo normal, y ahí entendí que algo había cambiado.  
+            Tus dramas me encantan, la manera tan tierna en la que tratas de expresarte cuando quieres decirme algo importante…  
+            <br><br>
+            En algún momento, sin darme cuenta, creo que me enamoré.
+        </p>
+        <button onclick="nextLevel(2)">Seguir</button>
+    </div>
+
+    <!-- NIVEL 3 -->
+    <div id="level3" style="display:none;">
+        <h1>Nivel 3</h1>
+        <p>
+            Hubo un momento que me marcó…  
+            Cuando pensé que tú solo me veías como un amigo.  
+            Sentí que había una pared invisible entre nosotros y pensé que no querías nada conmigo.  
+            <br><br>
+            Pero luego me dijiste que estaba equivocado, que no me veías solo como un amigo…  
+            Incluso terminaste esa afinidad que tanto me molestaba.  
+            <br><br>
+            Ese día sentí por primera vez que sí te importaba… y no solo como amigo.  
+            Estaba tan emocionado que pensé en ti durante días.
+        </p>
+        <button onclick="nextLevel(3)">Último nivel</button>
+    </div>
+
+    <!-- NIVEL 4 -->
+    <div id="level4" style="display:none;">
+        <h1>Pregunta Final ❤️</h1>
+        <p>
+            Valentina…  
+            Eres alguien que llegó a mi vida de la forma más simple pero se volvió importante de la manera más profunda.  
+            Hoy quiero preguntarte algo…
+        </p>
+
+        <h2 style="color:#ff4d88;">¿Quieres ser mi novia?</h2>
+
+        <button onclick="celebrar()">Sí 💖</button>
+
+        <!-- Botón NO escurridizo -->
+        <button id="noBtn" style="background:#ff9dbd; position:absolute;">
+            No
+        </button>
+    </div>
+</div>
+
+<!-- PANTALLA FINAL -->
+<div id="finalScreen">
+    <div class="big-heart">💗💗💗</div>
+    <h1>¡Sabía que dirías que sí, Valentina! 💕</h1>
+    <p style="font-size:22px; color:#ff2f79;">Me haces muy feliz 💗</p>
+</div>
+
+<script>
+function nextLevel(n) {
+    document.getElementById("level" + n).style.display = "none";
+    document.getElementById("level" + (n+1)).style.display = "block";
+}
+
+/* Fondo animado corazones */
+function crearCorazones() {
+    const container = document.getElementById("heartsContainer");
+    for (let i = 0; i < 15; i++) {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤";
+        heart.style.left = Math.random() * 100 + "%";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+        heart.style.fontSize = (20 + Math.random() * 20) + "px";
+        container.appendChild(heart);
+    }
+}
+crearCorazones();
+
+/* Botón NO escapa cada vez más rápido */
+let speed = 1;
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", () => {
+    speed += 0.3; 
+    let x = Math.random() * (300 * speed);
+    let y = Math.random() * (200 * speed);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+/* Pantalla final */
+function celebrar() {
+    document.getElementById("finalScreen").style.display = "block";
+}
+</script>
+
+</body>
+</html>
